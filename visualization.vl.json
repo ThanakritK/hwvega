@@ -1,0 +1,34 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 500,
+  "height": 550,
+  "params": [{"name": "numU", "select": "point"}],
+  "data": {
+    "url": "https://raw.githubusercontent.com/ThanakritK/hwvega/main/district.json",
+    "format": {"type": "topojson", "feature": "geodata"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.dcode",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/ThanakritK/hwvega/main/hwvega.csv"
+        },
+        "key": "dcode",
+        "fields": ["num_commu"]
+      }
+    }
+  ],
+  "projection": {"type": "Mercator"},
+  "mark": {"type": "geoshape"},
+  "encoding": {
+    "color": {
+      "condition": {
+        "param": "numU",
+        "field": "num_commu",
+        "type": "quantitative"
+      }
+    }
+  },
+  "config": {}
+}
